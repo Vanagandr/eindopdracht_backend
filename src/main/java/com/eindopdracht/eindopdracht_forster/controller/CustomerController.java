@@ -4,6 +4,7 @@ import com.eindopdracht.eindopdracht_forster.dto.CustomerInputDto;
 import com.eindopdracht.eindopdracht_forster.dto.CustomerOutputDto;
 import com.eindopdracht.eindopdracht_forster.repository.CustomerRepository;
 import com.eindopdracht.eindopdracht_forster.service.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.eindopdracht.eindopdracht_forster.model.Customer;
@@ -23,7 +24,7 @@ public class CustomerController {
 
     //PostMapping to Create Customer using Dto's
     @PostMapping
-    public ResponseEntity<CustomerOutputDto> createCustomer(@RequestBody CustomerInputDto customerInputDto) {
+    public ResponseEntity<CustomerOutputDto> createCustomer(@Valid @RequestBody CustomerInputDto customerInputDto) {
         CustomerOutputDto createdCustomer = customerService.createCustomer(customerInputDto);
         return ResponseEntity.ok(createdCustomer);
     }
