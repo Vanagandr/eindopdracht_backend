@@ -1,0 +1,1 @@
+insert into roles(rolename) values ('ROLE_ADMINISTRATION'), ('ROLE_MECHANIC'), ('ROLE_SUPPLY');
