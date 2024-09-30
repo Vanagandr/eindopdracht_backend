@@ -28,7 +28,7 @@ public class AuthService {
             Authentication auth = authManager.authenticate(up);
             UserDetails userDetails = (UserDetails) auth.getPrincipal();
             return jwtService.generateToken(userDetails);
-        } catch (AuthenticationException ex) {
+        } catch (AuthenticationExceptionCustom ex) {
             throw new AuthenticationExceptionCustom("Onjuiste username of wachtwoord");
 
         }

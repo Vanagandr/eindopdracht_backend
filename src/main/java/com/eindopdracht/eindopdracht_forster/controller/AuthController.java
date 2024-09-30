@@ -25,6 +25,5 @@ public class AuthController {
         String token = authService.signIn(authDto);
         return ResponseEntity.ok()
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-                .body("Token gemaakt");
-    }
+                .body("Token gemaakt : " + token); }
 }
