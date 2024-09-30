@@ -1,5 +1,6 @@
 package com.eindopdracht.eindopdracht_forster.exception;
 
+import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -30,6 +31,11 @@ public class ExceptionController {
                     .append(": ");
         });
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(validation_errors.toString());
+    }
+
+    @ExceptionHandler(AuthenticationExceptionCustom.class)
+    public ResponseEntity<String> handleAuthenticationException(AuthenticationException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
     }
 
 }
