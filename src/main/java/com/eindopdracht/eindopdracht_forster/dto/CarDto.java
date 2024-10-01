@@ -1,7 +1,9 @@
 package com.eindopdracht.eindopdracht_forster.dto;
+import com.eindopdracht.eindopdracht_forster.model.Customer;
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class CarDto {
 
@@ -19,5 +21,7 @@ public class CarDto {
 
     @NotBlank(message = "Veld mag niet leeg zijn")
     public LocalDate repairDate;
+
+    public CustomerOutputDto customer;
 
 }

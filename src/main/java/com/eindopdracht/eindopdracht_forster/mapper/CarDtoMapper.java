@@ -2,11 +2,21 @@ package com.eindopdracht.eindopdracht_forster.mapper;
 
 import com.eindopdracht.eindopdracht_forster.model.Car;
 import com.eindopdracht.eindopdracht_forster.dto.CarDto;
+import com.eindopdracht.eindopdracht_forster.model.Customer;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class CarDtoMapper {
 
+
+    private final CustomerDtoMapper customerDtoMapper;
+
+    public CarDtoMapper(CustomerDtoMapper customerDtoMapper) {
+        this.customerDtoMapper = customerDtoMapper;
+    }
 
     //Map from Car to CarDto
     public CarDto carToDtoMapper(Car car) {
@@ -16,7 +26,9 @@ public class CarDtoMapper {
         dto.yearOfConstruct = car.getYearOfConstruct();
         dto.inspectionDate = car.getInspectionDate();
         dto.repairDate = car.getRepairDate();
-
+        if (car.getCustomer() != null) {
+            dto.customer = customerDtoMapper.customerOutputDtoMapper(car.getCustomer());
+        }
         return dto;
     }
 
