@@ -1,12 +1,15 @@
 package com.eindopdracht.eindopdracht_forster.service;
 
 import com.eindopdracht.eindopdracht_forster.dto.CarDto;
+import com.eindopdracht.eindopdracht_forster.dto.InspectionDto;
 import com.eindopdracht.eindopdracht_forster.exception.CarNotFoundException;
 import com.eindopdracht.eindopdracht_forster.mapper.CarDtoMapper;
 import com.eindopdracht.eindopdracht_forster.model.Car;
 import com.eindopdracht.eindopdracht_forster.repository.CarRepository;
+import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -44,4 +47,26 @@ public class CarService {
 
 
     }
-}
+    public CarDto addInspectionDate (String carId, LocalDate inspectiondate) {
+        Car car = carRepository.findById(carId).orElseThrow(()->
+                new CarNotFoundException("Deze auto is niet gevonden!"));
+        car.setInspectionDate(inspectiondate);
+        carRepository.save(car);
+        return carDtoMapper.carToDtoMapper(car);
+    }
+
+
+
+
+    public CarDto addRepairDate (String carId, LocalDate repairdate){
+        Car car = carRepository.findById(carId).orElseThrow(() ->
+                new CarNotFoundException("Deze auto is niet gevonden!"));
+        car.setRepairDate(repairdate);
+        carRepository.save(car);
+        return carDtoMapper.carToDtoMapper(car);
+        }
+
+
+    }
+
+

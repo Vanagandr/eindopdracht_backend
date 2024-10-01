@@ -6,6 +6,7 @@ import com.eindopdracht.eindopdracht_forster.service.CarService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @RestController
@@ -24,6 +25,18 @@ public class CarController {
     public ResponseEntity<CarDto> addCar(@RequestBody CarDto carDto) {
         CarDto car = carService.addCar(carDto);
         return ResponseEntity.ok(car);
+    }
+
+    @PostMapping("/inspectiondate")
+    public ResponseEntity<CarDto> addInspectionDate(@RequestBody String carId, LocalDate inspectionDate){
+        CarDto carDto = carService.addInspectionDate(carId, inspectionDate);
+        return ResponseEntity.ok(carDto);
+    }
+
+    @PostMapping("/repairdate")
+    public ResponseEntity<CarDto> addRepairDate(@RequestBody String carId, LocalDate repairDate){
+        CarDto carDto = carService.addRepairDate(carId, repairDate);
+        return ResponseEntity.ok(carDto);
     }
 
     @DeleteMapping("{id}")

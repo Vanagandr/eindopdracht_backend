@@ -60,6 +60,8 @@ public class SecurityConfig  {
                         .requestMatchers(HttpMethod.POST, "/cars").hasRole("ADMINISTRATION")
                         .requestMatchers(HttpMethod.GET,"/cars/{id}").hasRole("ADMINISTRATION")
                         .requestMatchers(HttpMethod.DELETE, "/cars/{id}").hasRole("ADMINISTRATION")
+                        .requestMatchers(HttpMethod.POST, "/cars/inspectiondate").hasRole("MECHANINC")
+                        .requestMatchers(HttpMethod.POST, "/cars/repairdate").hasRole("MECHANINC")
 
                         .requestMatchers(HttpMethod.POST,"/repairs").hasRole("SUPPLY")
                         .requestMatchers(HttpMethod.DELETE,"/repairs/{id}").hasRole("SUPPLY")

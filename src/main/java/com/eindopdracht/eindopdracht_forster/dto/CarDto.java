@@ -15,9 +15,9 @@ public class CarDto {
     public String yearOfConstruct;
 
     @NotBlank(message = "Veld mag niet leeg zijn")
-    public LocalDate inspectDay;
+    public LocalDate inspectionDate;
 
     @NotBlank(message = "Veld mag niet leeg zijn")
-    public LocalDate repairDay;
+    public LocalDate repairDate;
 
 }

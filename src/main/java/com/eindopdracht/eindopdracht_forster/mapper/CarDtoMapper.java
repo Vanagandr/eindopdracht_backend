@@ -14,8 +14,8 @@ public class CarDtoMapper {
         dto.registration = car.getRegistration();
         dto.brand = car.getBrand();
         dto.yearOfConstruct = car.getYearOfConstruct();
-        dto.inspectDay = car.getInspectDay();
-        dto.repairDay = car.getRepairDay();
+        dto.inspectionDate = car.getInspectionDate();
+        dto.repairDate = car.getRepairDate();
 
         return dto;
     }
@@ -26,8 +26,8 @@ public class CarDtoMapper {
         car.setRegistration(carDto.registration);
         car.setBrand(carDto.brand);
         car.setYearOfConstruct(carDto.yearOfConstruct);
-        car.setInspectDay(carDto.inspectDay);
-        car.setRepairDay(carDto.repairDay);
+        car.setInspectionDate(carDto.inspectionDate);
+        car.setRepairDate(carDto.repairDate);
 
         return car;
 

@@ -18,11 +18,24 @@ public class Car {
     @Column(nullable = false)
     private String yearOfConstruct;
 
-    @Column(nullable = false)
-    private LocalDate inspectDay;
+    private LocalDate inspectionDate;
 
-    @Column(nullable = false)
-    private LocalDate repairDay;
+    private LocalDate repairDate;
+
+    public LocalDate getRepairDate() {
+        return repairDate;
+    }
+
+    public void setRepairDate(LocalDate repairDate) {
+        this.repairDate = repairDate;
+    }
+
+    public LocalDate getInspectionDate() {
+        return inspectionDate;
+    }
+    public void setInspectionDate(LocalDate inspectionDate) {
+        this.inspectionDate = inspectionDate;
+    }
 
     public String getRegistration() {
         return registration;
@@ -48,20 +61,5 @@ public class Car {
         this.yearOfConstruct = yearOfConstruct;
     }
 
-    public LocalDate getInspectDay() {
-        return inspectDay;
-    }
-
-    public void setInspectDay(LocalDate inspectDay) {
-        this.inspectDay = inspectDay;
-    }
-
-    public LocalDate getRepairDay() {
-        return repairDay;
-    }
-
-    public void setRepairDay(LocalDate repairDay) {
-        this.repairDay = repairDay;
-    }
 
 }
