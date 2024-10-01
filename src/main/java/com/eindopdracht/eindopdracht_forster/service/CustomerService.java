@@ -24,14 +24,12 @@ public class CustomerService {
     }
 
     //Find Customers by last name
-    public List<CustomerOutputDto> getCustomerByLastName(String lastName) {
-        List<Customer> customers = customerRepository.findByLastName(lastName);
-        if (customers.isEmpty()) {
+    public CustomerOutputDto getCustomerByLastName(String lastName) {
+        Customer customer = customerRepository.findByLastName(lastName);
+        if (customer == null) {
             throw new CustomerNotFoundException("Geen klanten gevonden met de achternaam : " + lastName);
         }
-        return customers.stream()
-                .map(customerDtoMapper::customerOutputDtoMapper)
-                .collect(Collectors.toList());
+        return customerDtoMapper.customerOutputDtoMapper(customer);
     }
 
     public CustomerOutputDto createCustomer(CustomerInputDto customerInputDto) {
@@ -40,8 +38,17 @@ public class CustomerService {
         }
         Customer customer = customerDtoMapper.customerInputDtoMapper(customerInputDto);
         return customerDtoMapper.customerOutputDtoMapper(customerRepository.save(customer));
-        }
-
-
     }
 
+
+    public String deleteCustomer(String lastName) {
+        Customer customer = customerRepository.findByLastName(lastName);
+        if (customer != null) {
+            customerRepository.delete(customer);
+            return ("Klant is verwijderd");
+        }else{
+            throw new CustomerNotFoundException("Deze klant is niet gevonden");
+        }
+
+    }
+}

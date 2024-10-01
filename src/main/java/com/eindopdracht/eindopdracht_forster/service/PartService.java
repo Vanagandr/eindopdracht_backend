@@ -1,0 +1,53 @@
+package com.eindopdracht.eindopdracht_forster.service;
+
+import com.eindopdracht.eindopdracht_forster.exception.PartNotFoundException;
+import com.eindopdracht.eindopdracht_forster.mapper.PartDtoMapper;
+import com.eindopdracht.eindopdracht_forster.dto.PartDto;
+import com.eindopdracht.eindopdracht_forster.model.Part;
+import com.eindopdracht.eindopdracht_forster.repository.PartRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class PartService {
+
+    private final PartRepository partRepository;
+    private final PartDtoMapper partDtoMapper;
+    public PartService(PartRepository partRepository, PartDtoMapper partDtoMapper) {
+        this.partRepository = partRepository;
+        this.partDtoMapper = partDtoMapper;
+    }
+    public PartDto addPart(PartDto partDto) {
+        Part existingPart = partRepository.findByType(partDto.type);
+        if (existingPart != null) {
+            existingPart.setQuantity(existingPart.getQuantity() + partDto.quantity);
+            partRepository.save(existingPart);
+            return partDtoMapper.partToDtoMapper(existingPart);
+        } else {
+            Part newPart = partDtoMapper.partDtoToPartMapper(partDto);
+            newPart.setQuantity(partDto.quantity);
+            partRepository.save(newPart);
+            return partDtoMapper.partToDtoMapper(newPart);
+        }
+    }
+    public String removePart(String type) {
+        Part part = partRepository.findByType(type);
+        if (part != null) {
+            partRepository.delete(part);
+            return ("Het onderdeel is verwijderd");
+        }else{
+            throw new PartNotFoundException("Dit onderdeel is niet gevonden");
+        }
+    }
+
+    public List<PartDto> getAllParts() {
+        List<Part> parts = partRepository.findAll();
+        return parts.stream()
+                .map(partDtoMapper::partToDtoMapper) // Map Part to PartDto
+                .collect(Collectors.toList());
+    }
+
+}
+

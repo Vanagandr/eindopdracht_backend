@@ -2,16 +2,11 @@ package com.eindopdracht.eindopdracht_forster.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public class UserDto {
+public class RepairDto {
 
     @NotBlank(message = "Veld mag niet leeg zijn")
-    public String username;
+    public String type;
 
     @NotBlank(message = "Veld mag niet leeg zijn")
-    public String password;
-
-    @NotBlank(message = "Veld mag niet leeg zijn")
-    public String[] roles;
+    public double price;
 }
-
-

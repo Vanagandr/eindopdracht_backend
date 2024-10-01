@@ -31,10 +31,13 @@ public class CustomerController {
 
     @GetMapping
     public ResponseEntity<?> getCustomerByLastName(@RequestParam String lastName) {
-        List<CustomerOutputDto> customers = customerService.getCustomerByLastName(lastName);
-        if (customers.isEmpty()) {
-            return ResponseEntity.status(204).body("Er zijn geen klanten gevonden met achternaam " + lastName);
-        }
-        return ResponseEntity.ok(customers);
+        CustomerOutputDto customer = customerService.getCustomerByLastName(lastName);
+        return ResponseEntity.ok(customer);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<String> deleteCustomer(@RequestParam String lastName) {
+        String responseMessage = customerService.deleteCustomer(lastName);
+        return ResponseEntity.ok(responseMessage);
     }
 }
