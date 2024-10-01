@@ -3,11 +3,14 @@ package com.eindopdracht.eindopdracht_forster.service;
 import com.eindopdracht.eindopdracht_forster.dto.CarDto;
 import com.eindopdracht.eindopdracht_forster.exception.CarNotFoundException;
 import com.eindopdracht.eindopdracht_forster.exception.CustomerNotFoundException;
+import com.eindopdracht.eindopdracht_forster.exception.RepairNotFoundException;
 import com.eindopdracht.eindopdracht_forster.mapper.CarDtoMapper;
 import com.eindopdracht.eindopdracht_forster.model.Car;
+import com.eindopdracht.eindopdracht_forster.model.Repair;
 import com.eindopdracht.eindopdracht_forster.model.Customer;
 import com.eindopdracht.eindopdracht_forster.repository.CarRepository;
 import com.eindopdracht.eindopdracht_forster.repository.CustomerRepository;
+import com.eindopdracht.eindopdracht_forster.repository.RepairRepository;
 import org.springframework.stereotype.Service;
 
 
@@ -20,11 +23,13 @@ public class CarService {
     private final CarRepository carRepository;
     private final CarDtoMapper carDtoMapper;
     private final CustomerRepository customerRepository;
+    private final RepairRepository repairRepository;
 
-    public CarService(CarRepository carRepository, CarDtoMapper carDtoMapper, CustomerRepository customerRepository) {
+    public CarService(CarRepository carRepository, CarDtoMapper carDtoMapper, CustomerRepository customerRepository, RepairRepository repairRepository) {
         this.carRepository = carRepository;
         this.carDtoMapper = carDtoMapper;
         this.customerRepository = customerRepository;
+        this.repairRepository = repairRepository;
     }
 
     public CarDto addCar(CarDto carDto) {
@@ -84,4 +89,17 @@ public class CarService {
         return "Auto met kenteken " + carId + " is gekoppeld aan klant " + customer.getLastName();
     }
 
+    public CarDto addNeededRepair(String registration, String type) {
+        Car car = carRepository.findByRegistration(registration);
+        if (car == null) {
+            throw new CarNotFoundException("Auto niet gevonden");
+        }
+        Repair repair = repairRepository.findByType(type);
+        if (repair == null) {
+            throw new RepairNotFoundException("Reparatiehandeling niet gevonden");
+        }
+        car.getNeededRepairs().add(repair);
+        carRepository.save(car);
+        return carDtoMapper.carToDtoMapper(car);
+    }
 }

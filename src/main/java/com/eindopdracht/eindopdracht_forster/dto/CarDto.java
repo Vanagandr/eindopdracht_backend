@@ -1,5 +1,6 @@
 package com.eindopdracht.eindopdracht_forster.dto;
 import com.eindopdracht.eindopdracht_forster.model.Customer;
+import com.eindopdracht.eindopdracht_forster.model.Repair;
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
@@ -23,5 +24,11 @@ public class CarDto {
     public LocalDate repairDate;
 
     public CustomerOutputDto customer;
+
+    public List<Repair> neededRepairs;
+
+    public List<Repair> doneRepairs;
+
+
 
 }

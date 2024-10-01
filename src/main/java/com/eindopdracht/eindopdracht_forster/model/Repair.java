@@ -28,4 +28,8 @@ public class Repair {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    @ManyToOne
+    @JoinColumn(name = "car_registration")
+    private Car car;
 }

@@ -28,7 +28,10 @@ public class CarDtoMapper {
         dto.repairDate = car.getRepairDate();
         if (car.getCustomer() != null) {
             dto.customer = customerDtoMapper.customerOutputDtoMapper(car.getCustomer());
+        }else{
+            dto.customer = null;
         }
+        dto.neededRepairs =car.getNeededRepairs();
         return dto;
     }
 
@@ -40,6 +43,7 @@ public class CarDtoMapper {
         car.setYearOfConstruct(carDto.yearOfConstruct);
         car.setInspectionDate(carDto.inspectionDate);
         car.setRepairDate(carDto.repairDate);
+        car.setNeededRepairs(carDto.neededRepairs);
 
         return car;
 

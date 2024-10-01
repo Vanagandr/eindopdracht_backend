@@ -2,6 +2,7 @@ package com.eindopdracht.eindopdracht_forster.controller;
 
 import com.eindopdracht.eindopdracht_forster.dto.CarDto;
 import com.eindopdracht.eindopdracht_forster.mapper.CarDtoMapper;
+import com.eindopdracht.eindopdracht_forster.model.Car;
 import com.eindopdracht.eindopdracht_forster.service.CarService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,10 +52,16 @@ public class CarController {
         return ResponseEntity.ok(car);
     }
 
-    @PutMapping("/assigncustomer/{customerId}/{carId}")
+    @PostMapping("/assigncustomer/{customerId}/{carId}")
     public ResponseEntity<String> assignCarToCustomer(@PathVariable Long customerId, @PathVariable String carId){
         String response = carService.assignCarToCustomer(customerId, carId);
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/neededrepairs/{type}/{registration}")
+    public ResponseEntity<CarDto> addNeededRepair(@PathVariable String registration, @PathVariable String type){
+        CarDto carDto = carService.addNeededRepair(registration, type);
+        return ResponseEntity.ok(carDto);
     }
 
 

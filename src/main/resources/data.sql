@@ -1,23 +1,38 @@
 insert into roles(rolename) values ('ROLE_ADMINISTRATION'), ('ROLE_MECHANIC'), ('ROLE_SUPPLY');
 
-insert into parts (type, price, quantity) values ('Band', 100, 20);
-insert into parts (type, price, quantity) values ('Accu', 120, 15);
-insert into parts (type, price, quantity) values ('Motorolie', 40, 50);
-insert into parts (type, price, quantity) values ('Remblokken', 70, 30);
-insert into parts (type, price, quantity) values ('Dynamo', 200, 10);
-insert into parts (type, price, quantity) values ('Waterpomp', 90, 25);
-insert into parts (type, price, quantity) values ('Brandstoffilter', 30, 40);
-insert into parts (type, price, quantity) values ('Luchtfilter', 20, 35);
-insert into parts (type, price, quantity) values ('Koplampen', 150, 18);
-insert into parts (type, price, quantity) values ('Radiateur', 180, 12);
+--Insert Customers
+INSERT INTO customers (last_name, city, phone_number) VALUES
+                                                          ('Jansen', 'Amsterdam', '0612345678'),
+                                                          ('Peters', 'Rotterdam', '0687654321'),
+                                                          ('Smith', 'Utrecht', '0698765432');
+-- Insert cars
+INSERT INTO cars (registration, brand, year_of_construct, inspection_date, repair_date, customer_id) VALUES
+                                                                                                         ('AB-123-YZ', 'Toyota', '2020', NULL, NULL, NULL),
+                                                                                                         ('XY-456-ZT', 'Honda', '2019', NULL, NULL, NULL);
 
-insert into repairs (type, price) values ('Band Vervangen', 100);
-insert into repairs (type, price) values ('Olie Verversen', 50);
-insert into repairs (type, price) values ('Accu Vervangen', 200);
-insert into repairs (type, price) values ('Remblokken Vervangen', 70);
-insert into repairs (type, price) values ('Dynamo Vervangen', 250);
-insert into repairs (type, price) values ('Waterpomp Vervangen', 150);
-insert into repairs (type, price) values ('Brandstoffilter Vervangen', 40);
-insert into repairs (type, price) values ('Luchtfilter Vervangen', 30);
-insert into repairs (type, price) values ('Koplampen Vervangen', 200);
-insert into repairs (type, price) values ('Radiateur Vervangen', 180);
+--Insert Parts
+INSERT INTO parts (type, price, quantity) VALUES
+                                              ('Band', 100, 20),
+                                              ('Accu', 120, 15),
+                                              ('Motorolie', 40, 50),
+                                              ('Remblokken', 70, 30),
+                                              ('Dynamo', 200, 10),
+                                              ('Waterpomp', 90, 25),
+                                              ('Brandstoffilter', 30, 40),
+                                              ('Luchtfilter', 20, 35),
+                                              ('Koplampen', 150, 18),
+                                              ('Radiateur', 180, 12);
+
+--Insert Repairs
+INSERT INTO repairs (type, price) VALUES
+                                      ('Inspectie', 45),
+                                      ('Band Vervangen', 100),
+                                      ('Olie Verversen', 50),
+                                      ('Accu Vervangen', 200),
+                                      ('Remblokken Vervangen', 70),
+                                      ('Dynamo Vervangen', 250),
+                                      ('Waterpomp Vervangen', 150),
+                                      ('Brandstoffilter Vervangen', 40),
+                                      ('Luchtfilter Vervangen', 30),
+                                      ('Koplampen Vervangen', 200),
+                                      ('Radiateur Vervangen', 180);

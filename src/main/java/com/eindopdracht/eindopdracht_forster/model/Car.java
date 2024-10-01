@@ -2,6 +2,7 @@ package com.eindopdracht.eindopdracht_forster.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,9 +23,36 @@ public class Car {
 
     private LocalDate repairDate;
 
-    @ManyToOne
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "car_repairs")
+    private List<Repair> neededRepairs = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "car_repairs_done")
+    private List<Repair> doneRepairs = new ArrayList<>();
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    //----------------------------------------------
+
+
+    public List<Repair> getNeededRepairs() {
+        return neededRepairs;
+    }
+
+    public void setNeededRepairs(List<Repair> neededRepairs) {
+        this.neededRepairs = neededRepairs;
+    }
+
+    public List<Repair> getDoneRepairs() {
+        return doneRepairs;
+    }
+
+    public void setDoneRepairs(List<Repair> doneRepairs) {
+        this.doneRepairs = doneRepairs;
+    }
 
     public Customer getCustomer() {
         return customer;
