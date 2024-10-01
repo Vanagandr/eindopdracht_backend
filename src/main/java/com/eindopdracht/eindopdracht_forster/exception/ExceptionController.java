@@ -38,4 +38,19 @@ public class ExceptionController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
     }
 
+    @ExceptionHandler(CarNotFoundException.class)
+    public ResponseEntity<String> handleCarNotFoundException(CarNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(RepairNotFoundException.class)
+    public ResponseEntity<String> handleRepairNotFoundException(RepairNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(PartNotFoundException.class)
+    public ResponseEntity<String> handlePartNotFoundException(PartNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
 }

@@ -52,8 +52,23 @@ public class SecurityConfig  {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/users").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth").permitAll()
+
                         .requestMatchers(HttpMethod.GET, "/customers").hasRole("ADMINISTRATION")
                         .requestMatchers(HttpMethod.POST, "/customers").hasRole("ADMINISTRATION")
+                        .requestMatchers(HttpMethod.DELETE, "/customers").hasRole("ADMINISTRATION")
+
+                        .requestMatchers(HttpMethod.POST, "/cars").hasRole("ADMINISTRATION")
+                        .requestMatchers(HttpMethod.GET,"/cars/{id}").hasRole("ADMINISTRATION")
+                        .requestMatchers(HttpMethod.DELETE, "/cars/{id}").hasRole("ADMINISTRATION")
+
+                        .requestMatchers(HttpMethod.POST,"/repairs").hasRole("SUPPLY")
+                        .requestMatchers(HttpMethod.DELETE,"/repairs/{id}").hasRole("SUPPLY")
+                        .requestMatchers(HttpMethod.GET, "/repairs").hasAnyRole("SUPPLY")
+
+                        .requestMatchers(HttpMethod.POST, "/parts").hasRole("SUPPLY")
+                        .requestMatchers(HttpMethod.DELETE,"/parts/{type}").hasRole("SUPPLY")
+                        .requestMatchers(HttpMethod.GET, "/parts").hasAnyRole("SUPPLY", "ADMINISTRATION","MECHANIC")
+
                         .anyRequest().denyAll()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
