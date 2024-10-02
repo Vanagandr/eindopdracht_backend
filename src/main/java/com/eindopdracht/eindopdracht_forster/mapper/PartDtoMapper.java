@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class PartDtoMapper {
 
     //Mapping from Part to PartDto
-    public PartDto partToDtoMapper (Part part){
+    public PartDto partToDtoMapper(Part part) {
         PartDto dto = new PartDto();
         dto.type = part.getType();
         dto.price = part.getPrice();
@@ -17,11 +17,12 @@ public class PartDtoMapper {
     }
 
     //Mapping from PartDto to Part
-    public Part partDtoToPartMapper (PartDto dto){
+    public Part partDtoToPartMapper(PartDto dto) {
         Part part = new Part();
         part.setType(dto.type);
         part.setPrice(dto.price);
         part.setQuantity(dto.quantity);
         return part;
     }
+
 }

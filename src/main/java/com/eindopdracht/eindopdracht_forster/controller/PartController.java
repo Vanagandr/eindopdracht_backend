@@ -35,4 +35,10 @@ public class PartController {
         List<PartDto> parts = partService.getAllParts();
         return ResponseEntity.ok(parts);
     }
+
+    @PutMapping("/{type}")
+    public ResponseEntity<PartDto> updatePart(@PathVariable String type, @RequestBody PartDto updatedPartDto) {
+        PartDto updatedPart = partService.updatePart(type, updatedPartDto);
+        return ResponseEntity.ok(updatedPart);
+    }
 }

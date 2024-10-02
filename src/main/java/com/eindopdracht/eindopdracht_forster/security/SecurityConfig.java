@@ -63,7 +63,10 @@ public class SecurityConfig  {
                         .requestMatchers(HttpMethod.POST, "/cars/inspectiondate").hasRole("MECHANINC")
                         .requestMatchers(HttpMethod.POST, "/cars/repairdate").hasRole("MECHANINC")
                         .requestMatchers(HttpMethod.POST, "/cars/assigncustomer/{customerId}/{carId}").hasRole("ADMINISTRATION")
-                        .requestMatchers(HttpMethod.POST, "/cars/neededrepairs/{registration}/{type}").hasRole("MECHANIC")
+                        .requestMatchers(HttpMethod.POST, "/cars/neededrepairs/{type}/{registration}").hasRole("MECHANIC")
+                        .requestMatchers(HttpMethod.POST, "/cars/donerepairs/{type}/{registration}").hasRole("MECHANIC")
+                        .requestMatchers(HttpMethod.POST, "/cars/usedparts/{type}/{registration}").hasRole("MECHANIC")
+                        .requestMatchers(HttpMethod.POST,"/cars/{carId}/repair").hasRole("MECHANIC")
 
                         .requestMatchers(HttpMethod.POST,"/repairs").hasRole("SUPPLY")
                         .requestMatchers(HttpMethod.DELETE,"/repairs/{id}").hasRole("SUPPLY")
@@ -72,6 +75,9 @@ public class SecurityConfig  {
                         .requestMatchers(HttpMethod.POST, "/parts").hasRole("SUPPLY")
                         .requestMatchers(HttpMethod.DELETE,"/parts/{type}").hasRole("SUPPLY")
                         .requestMatchers(HttpMethod.GET, "/parts").hasAnyRole("SUPPLY", "ADMINISTRATION","MECHANIC")
+                        .requestMatchers(HttpMethod.PUT, "/parts/{type}").hasRole("SUPPLY")
+
+                        .requestMatchers(HttpMethod.POST, "/invoices/{registration}").hasAnyRole("ADMINISTRATION","MECHANIC")
 
                         .anyRequest().denyAll()
                 )

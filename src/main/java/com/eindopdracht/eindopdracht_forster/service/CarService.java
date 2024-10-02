@@ -3,13 +3,16 @@ package com.eindopdracht.eindopdracht_forster.service;
 import com.eindopdracht.eindopdracht_forster.dto.CarDto;
 import com.eindopdracht.eindopdracht_forster.exception.CarNotFoundException;
 import com.eindopdracht.eindopdracht_forster.exception.CustomerNotFoundException;
+import com.eindopdracht.eindopdracht_forster.exception.PartNotFoundException;
 import com.eindopdracht.eindopdracht_forster.exception.RepairNotFoundException;
 import com.eindopdracht.eindopdracht_forster.mapper.CarDtoMapper;
 import com.eindopdracht.eindopdracht_forster.model.Car;
+import com.eindopdracht.eindopdracht_forster.model.Part;
 import com.eindopdracht.eindopdracht_forster.model.Repair;
 import com.eindopdracht.eindopdracht_forster.model.Customer;
 import com.eindopdracht.eindopdracht_forster.repository.CarRepository;
 import com.eindopdracht.eindopdracht_forster.repository.CustomerRepository;
+import com.eindopdracht.eindopdracht_forster.repository.PartRepository;
 import com.eindopdracht.eindopdracht_forster.repository.RepairRepository;
 import org.springframework.stereotype.Service;
 
@@ -24,12 +27,17 @@ public class CarService {
     private final CarDtoMapper carDtoMapper;
     private final CustomerRepository customerRepository;
     private final RepairRepository repairRepository;
+    private final PartRepository partRepository;
 
-    public CarService(CarRepository carRepository, CarDtoMapper carDtoMapper, CustomerRepository customerRepository, RepairRepository repairRepository) {
+
+
+    public CarService(CarRepository carRepository, CarDtoMapper carDtoMapper, CustomerRepository customerRepository, RepairRepository repairRepository, PartRepository partRepository) {
         this.carRepository = carRepository;
         this.carDtoMapper = carDtoMapper;
         this.customerRepository = customerRepository;
         this.repairRepository = repairRepository;
+        this.partRepository = partRepository;
+
     }
 
     public CarDto addCar(CarDto carDto) {
@@ -101,5 +109,47 @@ public class CarService {
         car.getNeededRepairs().add(repair);
         carRepository.save(car);
         return carDtoMapper.carToDtoMapper(car);
+    }
+
+    public CarDto addDoneRepair(String registration, String type) {
+        Car car = carRepository.findByRegistration(registration);
+        if (car == null) {
+            throw new CarNotFoundException("Auto niet gevonden");
+        }
+        Repair repair = repairRepository.findByType(type);
+        if (repair == null) {
+            throw new RepairNotFoundException("Reparatiehandeling niet gevonden");
+        }
+        car.getDoneRepairs().add(repair);
+        carRepository.save(car);
+        return carDtoMapper.carToDtoMapper(car);
+    }
+
+
+    public CarDto addUsedPart(String registration, String type) {
+        Car car = carRepository.findByRegistration(registration);
+        if (car == null) {
+            throw new CarNotFoundException("Auto niet gevonden");
+        }
+        Part part = partRepository.findByType(type);
+        if (part == null) {
+            throw new PartNotFoundException("Onderdeel niet gevonden");
+        }
+
+        car.getUsedParts().add(part);
+        carRepository.save(car);
+        return carDtoMapper.carToDtoMapper(car);
+    }
+
+    public String updateAgreeRepair(String carId, boolean agreeRepair){
+        Car car = carRepository.findByRegistration(carId);
+        if (car == null) {
+            throw new CarNotFoundException("Auto niet gevonden");
+        }else{
+            car.setAgreeRepair(agreeRepair);
+            carRepository.save(car);
+
+            return "Status voor reparatie van auto " + carId + " is nu : " + agreeRepair;
+        }
     }
 }

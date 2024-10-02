@@ -64,5 +64,24 @@ public class CarController {
         return ResponseEntity.ok(carDto);
     }
 
+    @PostMapping("/donerepairs/{type}/{registration}")
+    public ResponseEntity<CarDto> addDoneRepair(@PathVariable String registration, @PathVariable String type){
+        CarDto carDto = carService.addDoneRepair(registration, type);
+        return ResponseEntity.ok(carDto);
+    }
+
+    @PostMapping("/usedparts/{type}/{registration}")
+    public ResponseEntity<CarDto> addUsedPart(@PathVariable String registration, @PathVariable String type){
+        CarDto carDto = carService.addUsedPart(registration, type);
+        return ResponseEntity.ok(carDto);
+    }
+
+    @PostMapping("/{carId}/repair")
+    public ResponseEntity<String> updateRepairStatus(@PathVariable String carId, @RequestParam boolean agreeRepair) {
+        String response = carService.updateAgreeRepair(carId, agreeRepair);
+        return ResponseEntity.ok(response);
+
+    }
+
 
 }

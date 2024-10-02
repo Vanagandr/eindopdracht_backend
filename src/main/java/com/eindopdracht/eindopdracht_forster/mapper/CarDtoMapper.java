@@ -32,6 +32,10 @@ public class CarDtoMapper {
             dto.customer = null;
         }
         dto.neededRepairs =car.getNeededRepairs();
+        dto.doneRepairs =car.getDoneRepairs();
+        dto.usedParts = car.getUsedParts();
+        dto.agreerepair=car.isAgreeRepair();
+
         return dto;
     }
 
@@ -44,6 +48,9 @@ public class CarDtoMapper {
         car.setInspectionDate(carDto.inspectionDate);
         car.setRepairDate(carDto.repairDate);
         car.setNeededRepairs(carDto.neededRepairs);
+        car.setDoneRepairs(carDto.doneRepairs);
+        car.setUsedParts(carDto.usedParts);
+        car.setAgreeRepair(carDto.agreerepair);
 
         return car;
 

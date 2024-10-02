@@ -1,5 +1,8 @@
 package com.eindopdracht.eindopdracht_forster.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -7,6 +10,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "cars")
+//Voorkomt het maken van een endless loop bij het creeren van een invoice.
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "registration")
 public class Car {
 
     @Id
@@ -23,6 +28,9 @@ public class Car {
 
     private LocalDate repairDate;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "car")
+    private List<Invoice> invoices = new ArrayList<>();
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "car_repairs")
     private List<Repair> neededRepairs = new ArrayList<>();
@@ -31,12 +39,43 @@ public class Car {
     @JoinColumn(name = "car_repairs_done")
     private List<Repair> doneRepairs = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "car_parts_used")
+    private List<Part> usedParts = new ArrayList<>();
+
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    private boolean agreeRepair;
+
     //----------------------------------------------
 
+
+    public List<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
+    }
+
+    public boolean isAgreeRepair() {
+        return agreeRepair;
+    }
+
+    public void setAgreeRepair(boolean agreeRepair) {
+        this.agreeRepair = agreeRepair;
+    }
+
+    public List<Part> getUsedParts() {
+        return usedParts;
+    }
+
+    public void setUsedParts(List<Part> usedParts) {
+        this.usedParts = usedParts;
+    }
 
     public List<Repair> getNeededRepairs() {
         return neededRepairs;

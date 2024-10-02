@@ -6,22 +6,22 @@ INSERT INTO customers (last_name, city, phone_number) VALUES
                                                           ('Peters', 'Rotterdam', '0687654321'),
                                                           ('Smith', 'Utrecht', '0698765432');
 -- Insert cars
-INSERT INTO cars (registration, brand, year_of_construct, inspection_date, repair_date, customer_id) VALUES
-                                                                                                         ('AB-123-YZ', 'Toyota', '2020', NULL, NULL, NULL),
-                                                                                                         ('XY-456-ZT', 'Honda', '2019', NULL, NULL, NULL);
+INSERT INTO cars (registration, brand, year_of_construct, inspection_date, repair_date, customer_id, agree_repair) VALUES
+                                                                                                         ('AB-123-YZ', 'Toyota', '2020', NULL, NULL, NULL, FALSE),
+                                                                                                         ('XY-456-ZT', 'Honda', '2019', NULL, NULL, NULL, FALSE);
 
 --Insert Parts
 INSERT INTO parts (type, price, quantity) VALUES
-                                              ('Band', 100, 20),
-                                              ('Accu', 120, 15),
-                                              ('Motorolie', 40, 50),
-                                              ('Remblokken', 70, 30),
-                                              ('Dynamo', 200, 10),
-                                              ('Waterpomp', 90, 25),
-                                              ('Brandstoffilter', 30, 40),
-                                              ('Luchtfilter', 20, 35),
-                                              ('Koplampen', 150, 18),
-                                              ('Radiateur', 180, 12);
+                                              ('Band', 100, 1),
+                                              ('Accu', 120, 1),
+                                              ('Motorolie', 40, 1),
+                                              ('Remblokken', 70, 1),
+                                              ('Dynamo', 200, 1),
+                                              ('Waterpomp', 90, 1),
+                                              ('Brandstoffilter', 30, 1),
+                                              ('Luchtfilter', 20, 1),
+                                              ('Koplampen', 150, 1),
+                                              ('Radiateur', 180, 1);
 
 --Insert Repairs
 INSERT INTO repairs (type, price) VALUES

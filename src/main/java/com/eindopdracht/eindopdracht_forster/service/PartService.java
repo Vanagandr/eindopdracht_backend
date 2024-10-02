@@ -49,5 +49,18 @@ public class PartService {
                 .collect(Collectors.toList());
     }
 
+    public PartDto updatePart(String type, PartDto updatedPartDto) {
+        Part existingPart = partRepository.findByType(type);
+        if (existingPart == null) {
+            throw new PartNotFoundException("Dit onderdeel is niet gevonden");
+        }
+        existingPart.setPrice(updatedPartDto.price);
+        existingPart.setQuantity(updatedPartDto.quantity);
+
+        partRepository.save(existingPart);
+
+        return partDtoMapper.partToDtoMapper(existingPart);
+    }
+
 }
 
