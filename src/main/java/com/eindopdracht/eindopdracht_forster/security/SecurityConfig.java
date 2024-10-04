@@ -67,6 +67,8 @@ public class SecurityConfig  {
                         .requestMatchers(HttpMethod.POST, "/cars/donerepairs/{type}/{registration}").hasRole("MECHANIC")
                         .requestMatchers(HttpMethod.POST, "/cars/usedparts/{type}/{registration}").hasRole("MECHANIC")
                         .requestMatchers(HttpMethod.POST,"/cars/{carId}/repair").hasRole("MECHANIC")
+                        .requestMatchers(HttpMethod.POST, "/cars/{registration}/papers").hasRole("ADMINISTRATION")
+                        .requestMatchers(HttpMethod.GET, "/cars/{registration}/papers").hasRole("ADMINISTRATION")
 
                         .requestMatchers(HttpMethod.POST,"/repairs").hasRole("SUPPLY")
                         .requestMatchers(HttpMethod.DELETE,"/repairs/{id}").hasRole("SUPPLY")

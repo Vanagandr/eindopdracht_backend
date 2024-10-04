@@ -6,14 +6,12 @@ import com.eindopdracht.eindopdracht_forster.exception.CustomerNotFoundException
 import com.eindopdracht.eindopdracht_forster.exception.PartNotFoundException;
 import com.eindopdracht.eindopdracht_forster.exception.RepairNotFoundException;
 import com.eindopdracht.eindopdracht_forster.mapper.CarDtoMapper;
-import com.eindopdracht.eindopdracht_forster.model.Car;
-import com.eindopdracht.eindopdracht_forster.model.Part;
-import com.eindopdracht.eindopdracht_forster.model.Repair;
-import com.eindopdracht.eindopdracht_forster.model.Customer;
+import com.eindopdracht.eindopdracht_forster.model.*;
 import com.eindopdracht.eindopdracht_forster.repository.CarRepository;
 import com.eindopdracht.eindopdracht_forster.repository.CustomerRepository;
 import com.eindopdracht.eindopdracht_forster.repository.PartRepository;
 import com.eindopdracht.eindopdracht_forster.repository.RepairRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 
@@ -46,17 +44,17 @@ public class CarService {
         return carDtoMapper.carToDtoMapper(savedCar);
     }
 
-    public String removeCar(String carId) {
-        Optional<Car> car = carRepository.findById(carId);
+    public String removeCar(String registration) {
+        Optional<Car> car = carRepository.findById(registration);
         if (car.isPresent()) {
-            carRepository.deleteById(carId);
+            carRepository.deleteById(registration);
             return "Auto is verwijderd!";
         }
         throw new CarNotFoundException("Deze auto is niet gevonden!");
     }
 
-    public Optional<CarDto> getCar(String carId) {
-        Optional<Car> car = carRepository.findById(carId);
+    public Optional<CarDto> getCar(String registration) {
+        Optional<Car> car = carRepository.findById(registration);
         if (car.isPresent()) {
             return car.map(carDtoMapper::carToDtoMapper);
         }
@@ -65,8 +63,8 @@ public class CarService {
 
     }
 
-    public CarDto addInspectionDate(String carId, LocalDate inspectiondate) {
-        Car car = carRepository.findById(carId).orElseThrow(() ->
+    public CarDto addInspectionDate(String registration, LocalDate inspectiondate) {
+        Car car = carRepository.findById(registration).orElseThrow(() ->
                 new CarNotFoundException("Deze auto is niet gevonden!"));
         car.setInspectionDate(inspectiondate);
         carRepository.save(car);
@@ -74,27 +72,27 @@ public class CarService {
     }
 
 
-    public CarDto addRepairDate(String carId, LocalDate repairdate) {
-        Car car = carRepository.findById(carId).orElseThrow(() ->
+    public CarDto addRepairDate(String registration, LocalDate repairdate) {
+        Car car = carRepository.findById(registration).orElseThrow(() ->
                 new CarNotFoundException("Deze auto is niet gevonden!"));
         car.setRepairDate(repairdate);
         carRepository.save(car);
         return carDtoMapper.carToDtoMapper(car);
     }
 
-    public String assignCarToCustomer(Long customerId, String carId){
+    public String assignCarToCustomer(Long customerId, String registration){
         Customer customer = customerRepository.findById(customerId);
         if (customer == null) {
             throw new CustomerNotFoundException("Deze klant is niet gevonden!");
         }
-        Car car = carRepository.findByRegistration(carId);
+        Car car = carRepository.findByRegistration(registration);
         if (car == null) {
             throw new CarNotFoundException("Deze auto is niet gevonden!");
         }
         car.setCustomer(customer);
         carRepository.save(car);
 
-        return "Auto met kenteken " + carId + " is gekoppeld aan klant " + customer.getLastName();
+        return "Auto met kenteken " + registration + " is gekoppeld aan klant " + customer.getLastName();
     }
 
     public CarDto addNeededRepair(String registration, String type) {
@@ -141,15 +139,36 @@ public class CarService {
         return carDtoMapper.carToDtoMapper(car);
     }
 
-    public String updateAgreeRepair(String carId, boolean agreeRepair){
-        Car car = carRepository.findByRegistration(carId);
+    public String updateAgreeRepair(String registration, boolean agreeRepair){
+        Car car = carRepository.findByRegistration(registration);
         if (car == null) {
             throw new CarNotFoundException("Auto niet gevonden");
         }else{
             car.setAgreeRepair(agreeRepair);
             carRepository.save(car);
 
-            return "Status voor reparatie van auto " + carId + " is nu : " + agreeRepair;
+            return "Status voor reparatie van auto " + registration + " is nu : " + agreeRepair;
         }
+    }
+
+    @Transactional
+    public Car addCarPapers(String registration, CarPapers carPapers) {
+        Optional<Car> optionalCar = carRepository.findById(registration);
+        if (optionalCar.isEmpty()) {
+            throw new CarNotFoundException("Auto niet gevonden");
+        }
+
+        Car car = optionalCar.get();
+        car.setCarPapers(carPapers);
+        return carRepository.save(car);
+    }
+
+    @Transactional
+    public CarPapers getCarPapers(String registration ){
+        Optional<Car> optionalCar = carRepository.findById(registration);
+        if (optionalCar.isEmpty()) {
+            throw new CarNotFoundException("Auto niet gevonden");
+        }
+        return optionalCar.get().getCarPapers();
     }
 }

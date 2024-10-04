@@ -21,7 +21,7 @@ public class ExceptionController {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<String> handleValidationExceptions(MethodArgumentNotValidException ex){
+    public ResponseEntity<String> handleValidationExceptions(MethodArgumentNotValidException ex) {
         StringBuilder validation_errors = new StringBuilder("Fouten in Validatie: ");
 
         ex.getBindingResult().getFieldErrors().forEach(error -> {
@@ -51,6 +51,11 @@ public class ExceptionController {
     @ExceptionHandler(PartNotFoundException.class)
     public ResponseEntity<String> handlePartNotFoundException(PartNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(CarPaperException.class)
+    public ResponseEntity<String> handleCarPaperException(CarPaperException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 
 }

@@ -1,7 +1,7 @@
 package com.eindopdracht.eindopdracht_forster.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -50,8 +50,17 @@ public class Car {
 
     private boolean agreeRepair;
 
-    //----------------------------------------------
+    @OneToOne
+    @JsonIgnoreProperties(value = {"contents","contentType"} )
+    CarPapers carPapers;
 
+    public CarPapers getCarPapers() {
+        return carPapers;
+    }
+
+    public void setCarPapers(CarPapers carPapers) {
+        this.carPapers = carPapers;
+    }
 
     public List<Invoice> getInvoices() {
         return invoices;
