@@ -1,8 +1,6 @@
 package com.eindopdracht.eindopdracht_forster.controller;
 
-import com.eindopdracht.eindopdracht_forster.dto.PartDto;
 import com.eindopdracht.eindopdracht_forster.dto.RepairDto;
-import com.eindopdracht.eindopdracht_forster.exception.RepairNotFoundException;
 import com.eindopdracht.eindopdracht_forster.service.RepairService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

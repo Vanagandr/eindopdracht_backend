@@ -1,6 +1,7 @@
 package com.eindopdracht.eindopdracht_forster.service;
 
 import com.eindopdracht.eindopdracht_forster.exception.CarNotFoundException;
+import com.eindopdracht.eindopdracht_forster.exception.InvoiceNotFoundException;
 import com.eindopdracht.eindopdracht_forster.mapper.InvoiceDtoMapper;
 import com.eindopdracht.eindopdracht_forster.repository.CarRepository;
 import com.eindopdracht.eindopdracht_forster.repository.InvoiceRepository;
@@ -34,6 +35,17 @@ public class InvoiceService {
         invoice.setCar(car);
         Invoice savedInvoice = invoiceRepository.save(invoice);
         return invoiceDtoMapper.invoiceToDto(savedInvoice);
+    }
+
+    public String updateInvoicePaid(Long id, boolean paid) {
+        Invoice invoice = invoiceRepository.findByInvoiceId(id);
+        if (invoice == null){
+            throw new InvoiceNotFoundException("Invoice is niet gevonden");
+        }else{
+            invoice.setInvoicePaid(paid);
+            invoiceRepository.save(invoice);
+            return "Invoice is op betaald gezet";
+        }
     }
 
 }

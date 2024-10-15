@@ -21,4 +21,10 @@ public class InvoiceController {
         InvoiceDto invoiceDto = invoiceService.createInvoice(registration);
         return new ResponseEntity<>(invoiceDto, HttpStatus.CREATED);
     }
+
+    @PostMapping("/paid")
+    public ResponseEntity<String> updateInvoicePaid(@PathVariable Long id, @RequestParam boolean invoicePaid) {
+        String response = invoiceService.updateInvoicePaid(id, invoicePaid);
+        return ResponseEntity.ok(response);
+    }
 }

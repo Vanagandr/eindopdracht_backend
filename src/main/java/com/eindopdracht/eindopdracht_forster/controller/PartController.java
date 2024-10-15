@@ -1,9 +1,7 @@
 package com.eindopdracht.eindopdracht_forster.controller;
 
 import com.eindopdracht.eindopdracht_forster.dto.PartDto;
-import com.eindopdracht.eindopdracht_forster.model.Part;
 import com.eindopdracht.eindopdracht_forster.service.PartService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

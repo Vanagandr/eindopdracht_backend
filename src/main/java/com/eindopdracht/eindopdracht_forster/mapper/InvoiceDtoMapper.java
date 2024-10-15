@@ -13,6 +13,7 @@ public class InvoiceDtoMapper {
         dto.id = invoice.getId();
         dto.car = invoice.getCar();
         dto.totalAmount = invoice.getTotalAmount();
+        dto.invoicePaid = invoice.isInvoicePaid();
 
         return dto;
     }
@@ -22,6 +23,7 @@ public class InvoiceDtoMapper {
         Invoice invoice = new Invoice();
         invoice.setCar(invoiceDto.car);
         invoice.setTotalAmount(invoiceDto.totalAmount);
+        invoice.setInvoicePaid(invoiceDto.invoicePaid);
         return invoice;
     }
 }

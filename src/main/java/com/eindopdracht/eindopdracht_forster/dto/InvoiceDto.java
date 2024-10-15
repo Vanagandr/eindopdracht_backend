@@ -9,4 +9,6 @@ public class InvoiceDto {
     public Car car;
 
     public double totalAmount;
+
+    public boolean invoicePaid;
 }

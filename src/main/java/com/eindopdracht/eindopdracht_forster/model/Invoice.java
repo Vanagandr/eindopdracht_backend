@@ -23,7 +23,18 @@ public class Invoice {
 
     private double totalAmount;
 
+    private boolean invoicePaid;
+
     //-------------------------------------------------------
+
+
+    public boolean isInvoicePaid() {
+        return invoicePaid;
+    }
+
+    public void setInvoicePaid(boolean invoicePaid) {
+        this.invoicePaid = invoicePaid;
+    }
 
     public Car getCar() {
         return car;
@@ -58,6 +69,8 @@ public class Invoice {
                     .mapToDouble(Part::getPrice) // Assuming Part has a getPrice() method
                     .sum();
         }
-        return total;
+
+        double btw = 0.21;
+        return total + (total * btw);
     }
 }

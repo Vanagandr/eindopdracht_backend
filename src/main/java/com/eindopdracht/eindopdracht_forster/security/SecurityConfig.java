@@ -80,7 +80,7 @@ public class SecurityConfig  {
                         .requestMatchers(HttpMethod.PUT, "/parts/{type}").hasRole("SUPPLY")
 
                         .requestMatchers(HttpMethod.POST, "/invoices/{registration}").hasAnyRole("ADMINISTRATION","MECHANIC")
-
+                        .requestMatchers(HttpMethod.POST, "/invoices/paid").hasRole("ADMINISTRATION")
                         .anyRequest().denyAll()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
