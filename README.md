@@ -1,2 +1,1 @@
-Eindopdracht NOVI Hogeschool
-(In development)
+Eindopdracht NOVI Leerlijn Backend.
