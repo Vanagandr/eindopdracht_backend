@@ -21,7 +21,7 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
+    //Adds a user to the database
     @PostMapping("/users")
     public String createUser(@RequestBody UserDto userDto) {
         return userService.createUser(userDto);

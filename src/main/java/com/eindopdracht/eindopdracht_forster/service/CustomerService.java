@@ -32,6 +32,7 @@ public class CustomerService {
         return customerDtoMapper.customerOutputDtoMapper(customer);
     }
 
+    //Create Customers
     public CustomerOutputDto createCustomer(CustomerInputDto customerInputDto) {
         if (customerRepository.findByPhoneNumber(customerInputDto.phoneNumber) != null) {
             throw new PhoneNumberNotUniqueException("Het telefoonnummer " + customerInputDto.phoneNumber + " bestaat al");
@@ -40,7 +41,7 @@ public class CustomerService {
         return customerDtoMapper.customerOutputDtoMapper(customerRepository.save(customer));
     }
 
-
+    //Delete Customers
     public String deleteCustomer(String lastName) {
         Customer customer = customerRepository.findByLastName(lastName);
         if (customer != null) {

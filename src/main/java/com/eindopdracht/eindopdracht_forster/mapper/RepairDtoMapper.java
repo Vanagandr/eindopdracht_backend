@@ -1,9 +1,8 @@
 package com.eindopdracht.eindopdracht_forster.mapper;
 
-import com.eindopdracht.eindopdracht_forster.dto.CarDto;
+
 import com.eindopdracht.eindopdracht_forster.model.Repair;
 import com.eindopdracht.eindopdracht_forster.dto.RepairDto;
-import com.eindopdracht.eindopdracht_forster.mapper.CarDtoMapper;
 import org.springframework.stereotype.Component;
 
 @Component

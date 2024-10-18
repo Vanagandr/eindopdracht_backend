@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "customers")
-//Voorkomt het maken van een endless loop bij het creeren van een invoice.
+//Also helps not creating an endless loop when making an invoice.
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Customer {
 

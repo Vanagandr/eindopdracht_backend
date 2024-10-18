@@ -18,6 +18,8 @@ public class PartService {
         this.partRepository = partRepository;
         this.partDtoMapper = partDtoMapper;
     }
+
+    //Add parts do database
     public PartDto addPart(PartDto partDto) {
         com.eindopdracht.eindopdracht_forster.model.Part existingPart = partRepository.findByType(partDto.type);
         if (existingPart != null) {
@@ -31,6 +33,8 @@ public class PartService {
             return partDtoMapper.partToDtoMapper(newPart);
         }
     }
+
+    //Remove parts from the database
     public String removePart(String type) {
         com.eindopdracht.eindopdracht_forster.model.Part part = partRepository.findByType(type);
         if (part != null) {
@@ -41,6 +45,7 @@ public class PartService {
         }
     }
 
+    //Get all parts from the database
     public List<PartDto> getAllParts() {
         List<com.eindopdracht.eindopdracht_forster.model.Part> parts = partRepository.findAll();
         return parts.stream()
@@ -48,6 +53,7 @@ public class PartService {
                 .collect(Collectors.toList());
     }
 
+    //Update parts in the database
     public PartDto updatePart(String type, PartDto updatedPartDto) {
         com.eindopdracht.eindopdracht_forster.model.Part existingPart = partRepository.findByType(type);
         if (existingPart == null) {

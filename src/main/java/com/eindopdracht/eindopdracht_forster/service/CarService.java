@@ -38,12 +38,14 @@ public class CarService {
 
     }
 
+    //Add car to database
     public CarDto addCar(CarDto carDto) {
         Car car = carDtoMapper.carDtoToCarMapper(carDto);
         Car savedCar = carRepository.save(car);
         return carDtoMapper.carToDtoMapper(savedCar);
     }
 
+    //Remove car from the database
     public String removeCar(String registration) {
         Optional<Car> car = carRepository.findById(registration);
         if (car.isPresent()) {
@@ -53,6 +55,7 @@ public class CarService {
         throw new CarNotFoundException("Deze auto is niet gevonden!");
     }
 
+    //Gets car from database.
     public Optional<CarDto> getCar(String registration) {
         Optional<Car> car = carRepository.findById(registration);
         if (car.isPresent()) {
@@ -63,23 +66,35 @@ public class CarService {
 
     }
 
-    public CarDto addInspectionDate(String registration, LocalDate inspectiondate) {
-        Car car = carRepository.findById(registration).orElseThrow(() ->
-                new CarNotFoundException("Deze auto is niet gevonden!"));
-        car.setInspectionDate(inspectiondate);
-        carRepository.save(car);
-        return carDtoMapper.carToDtoMapper(car);
+    //Sets an inspection date.
+    public Optional<CarDto> addInspectionDate(String registration, LocalDate inspectiondate) {
+        Optional<Car> optionalCar = carRepository.findById(registration);
+        if (optionalCar.isPresent()) {
+            Car car = optionalCar.get();
+            car.setInspectionDate(inspectiondate);
+            carRepository.save(car);
+
+            return optionalCar.map(carDtoMapper::carToDtoMapper);
+        }
+
+        throw new CarNotFoundException("Deze auto is niet gevonden!");
     }
 
+    //Sets a repair date, same as above just changed the name ;)
+    public Optional<CarDto> addRepairDate(String registration, LocalDate repairdate) {
+        Optional<Car> optionalCar = carRepository.findById(registration);
+        if (optionalCar.isPresent()) {
+            Car car = optionalCar.get();
+            car.setRepairDate(repairdate);
+            carRepository.save(car);
 
-    public CarDto addRepairDate(String registration, LocalDate repairdate) {
-        Car car = carRepository.findById(registration).orElseThrow(() ->
-                new CarNotFoundException("Deze auto is niet gevonden!"));
-        car.setRepairDate(repairdate);
-        carRepository.save(car);
-        return carDtoMapper.carToDtoMapper(car);
+            return optionalCar.map(carDtoMapper::carToDtoMapper);
+
+        }
+        throw new CarNotFoundException("Deze auto is niet gevonden!");
     }
 
+    //Assign a customer to a car.
     public String assignCarToCustomer(Long customerId, String registration){
         Customer customer = customerRepository.findById(customerId);
         if (customer == null) {
@@ -95,6 +110,7 @@ public class CarService {
         return "Auto met kenteken " + registration + " is gekoppeld aan klant " + customer.getLastName();
     }
 
+    //Add needed repairs to a car.
     public CarDto addNeededRepair(String registration, String type) {
         Car car = carRepository.findByRegistration(registration);
         if (car == null) {
@@ -109,6 +125,7 @@ public class CarService {
         return carDtoMapper.carToDtoMapper(car);
     }
 
+    //Add done repairs to a car.
     public CarDto addDoneRepair(String registration, String type) {
         Car car = carRepository.findByRegistration(registration);
         if (car == null) {
@@ -123,7 +140,7 @@ public class CarService {
         return carDtoMapper.carToDtoMapper(car);
     }
 
-
+    //Add the used parts to a car
     public CarDto addUsedPart(String registration, String type) {
         Car car = carRepository.findByRegistration(registration);
         if (car == null) {
@@ -139,6 +156,7 @@ public class CarService {
         return carDtoMapper.carToDtoMapper(car);
     }
 
+    //Change the repair status
     public String updateAgreeRepair(String registration, boolean agreeRepair){
         Car car = carRepository.findByRegistration(registration);
         if (car == null) {
@@ -151,6 +169,7 @@ public class CarService {
         }
     }
 
+    //Add car papers to a car
     @Transactional
     public Car addCarPapers(String registration, CarPapers carPapers) {
         Optional<Car> optionalCar = carRepository.findById(registration);
@@ -163,6 +182,7 @@ public class CarService {
         return carRepository.save(car);
     }
 
+    //Get the car papers from a car, Transactional because this is needed when printing an invoice.
     @Transactional
     public CarPapers getCarPapers(String registration ){
         Optional<Car> optionalCar = carRepository.findById(registration);

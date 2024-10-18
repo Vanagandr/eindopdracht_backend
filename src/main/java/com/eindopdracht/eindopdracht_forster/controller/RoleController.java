@@ -14,6 +14,7 @@ public class RoleController {
 
     private final RoleRepository repos;
 
+    //Gets roles from database
     public RoleController(RoleRepository repos) {
         this.repos = repos;
     }

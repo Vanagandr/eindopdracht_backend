@@ -25,6 +25,7 @@ public class UserService {
         this.encoder = encoder;
     }
 
+    //Create a user
     public String createUser(UserDto userDto) {
         User newUser = new User();
         newUser.setUsername(userDto.username);

@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "cars")
-//Voorkomt het maken van een endless loop bij het creeren van een invoice.
+//Makes sure an endless  loop is not created when creating an invoice, took me 500 years to figure this out.
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "registration")
 public class Car {
 

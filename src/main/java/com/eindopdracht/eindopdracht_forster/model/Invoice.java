@@ -5,17 +5,16 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "invoices")
-//Voorkomt het maken van een endless loop bij het creeren van een invoice.
+//Helps not making an endless loop when creating an invoice.
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Invoice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long invoiceId;
 
     @ManyToOne
     @JoinColumn(name = "car_registration", nullable = false)
@@ -54,7 +53,7 @@ public class Invoice {
     }
 
     public Long getId() {
-        return id;
+        return invoiceId;
     }
 
     private double calculateTotalAmount() {

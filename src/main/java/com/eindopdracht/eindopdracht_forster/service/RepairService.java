@@ -22,12 +22,14 @@ public class RepairService {
         this.repairDtoMapper = repairDtoMapper;
     }
 
+    //Add a repair
     public RepairDto addRepair(RepairDto repairDto) {
         Repair repair = repairDtoMapper.repairDtoToRepairMapper(repairDto);
         Repair savedRepair = repairRepository.save(repair);
         return repairDtoMapper.repairToDtoMapper(savedRepair);
     }
 
+    //Remove a repair
     public void removeRepair(String id){
         if(repairRepository.existsById(id)){
             repairRepository.deleteById(id);
@@ -36,10 +38,11 @@ public class RepairService {
         }
     }
 
+    //Get all the repairs
     public List<RepairDto> getAllRepairs() {
         List<Repair> repairs = repairRepository.findAll();
         return repairs.stream()
-                .map(repairDtoMapper::repairToDtoMapper) // Map Part to PartDto
+                .map(repairDtoMapper::repairToDtoMapper)
                 .collect(Collectors.toList());
     }
 

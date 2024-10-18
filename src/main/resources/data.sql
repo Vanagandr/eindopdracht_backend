@@ -1,5 +1,18 @@
 insert into roles(rolename) values ('ROLE_ADMINISTRATION'), ('ROLE_MECHANIC'), ('ROLE_SUPPLY');
 
+--Insert users
+insert into users(username, password) values ('SuperUser', '$2a$12$W38ulbhtl2JT2eb9.B7GleUEx.eyqF.ftmgQ.tqYJHiUW6cj2BBk2'),
+                                             ('TestMechanic','$2a$12$W38ulbhtl2JT2eb9.B7GleUEx.eyqF.ftmgQ.tqYJHiUW6cj2BBk2'),
+                                             ('TestAdministration', '$2a$12$W38ulbhtl2JT2eb9.B7GleUEx.eyqF.ftmgQ.tqYJHiUW6cj2BBk2'),
+                                             ('TestSupply', '$2a$12$W38ulbhtl2JT2eb9.B7GleUEx.eyqF.ftmgQ.tqYJHiUW6cj2BBk2');
+
+--Insert users into roles
+insert into users_roles (user_id, role_id) values ('SuperUser', 'ROLE_ADMINISTRATION'),
+                                                  ('SuperUser', 'ROLE_MECHANIC'),
+                                                  ('SuperUser', 'ROLE_SUPPLY'),
+                                                  ('TestMechanic', 'ROLE_MECHANIC'),
+                                                  ('TestAdministration', 'ROLE_ADMINISTRATION'),
+                                                  ('TestSupply', 'ROLE_SUPPLY');
 --Insert Customers
 INSERT INTO customers (last_name, city, phone_number) VALUES
                                                           ('Jansen', 'Amsterdam', '0612345678'),

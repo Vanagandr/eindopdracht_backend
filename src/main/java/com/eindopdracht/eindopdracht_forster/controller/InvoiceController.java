@@ -15,14 +15,14 @@ public class InvoiceController {
     public InvoiceController(InvoiceService invoiceService) {
         this.invoiceService = invoiceService;
     }
-
-    @PostMapping("/{registration}")
-    public ResponseEntity<InvoiceDto> createInvoice(@PathVariable String registration) {
+    // Endpoint to create a invoice.
+    @PostMapping("/create")
+    public ResponseEntity<InvoiceDto> createInvoice(@RequestParam String registration) {
         InvoiceDto invoiceDto = invoiceService.createInvoice(registration);
         return new ResponseEntity<>(invoiceDto, HttpStatus.CREATED);
     }
-
-    @PostMapping("/paid")
+    // Set a  invoice to paid.
+    @PostMapping("/paid/{id}")
     public ResponseEntity<String> updateInvoicePaid(@PathVariable Long id, @RequestParam boolean invoicePaid) {
         String response = invoiceService.updateInvoicePaid(id, invoicePaid);
         return ResponseEntity.ok(response);

@@ -5,12 +5,12 @@ import com.eindopdracht.eindopdracht_forster.exception.InvoiceNotFoundException;
 import com.eindopdracht.eindopdracht_forster.mapper.InvoiceDtoMapper;
 import com.eindopdracht.eindopdracht_forster.repository.CarRepository;
 import com.eindopdracht.eindopdracht_forster.repository.InvoiceRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import com.eindopdracht.eindopdracht_forster.dto.InvoiceDto;
 import com.eindopdracht.eindopdracht_forster.model.Car;
 import com.eindopdracht.eindopdracht_forster.model.Invoice;
 
-import java.util.Optional;
 
 @Service
 public class InvoiceService {
@@ -25,6 +25,8 @@ public class InvoiceService {
         this.invoiceDtoMapper = invoiceDtoMapper;
     }
 
+    //Create an invoice
+    @Transactional
     public InvoiceDto createInvoice(String registration) {
         Car car = carRepository.findByRegistration(registration);
         if (car == null) {
@@ -37,6 +39,8 @@ public class InvoiceService {
         return invoiceDtoMapper.invoiceToDto(savedInvoice);
     }
 
+    //Update the payment status of an invoice
+    @Transactional
     public String updateInvoicePaid(Long id, boolean paid) {
         Invoice invoice = invoiceRepository.findByInvoiceId(id);
         if (invoice == null){

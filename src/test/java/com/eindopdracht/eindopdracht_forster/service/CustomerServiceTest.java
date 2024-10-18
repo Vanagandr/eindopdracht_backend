@@ -47,7 +47,7 @@ public class CustomerServiceTest {
         assertEquals(result.lastName = "Jansen", lastName);
     }
 
-    //Test Customer niet gevonden
+    //Test Customer not found
     @Test
     public void testGetCustomerByLastName_CustomerNotFound() {
 
@@ -78,7 +78,7 @@ public class CustomerServiceTest {
         assertEquals(result.phoneNumber = "0612345678", customerInputDto.phoneNumber);
 
     }
-    //Test telefoonnummer is niet uniek
+    //Test telefoonnummer not unique
     @Test
     public void testCreateCustomer_PhoneNumberNotUnique() {
 

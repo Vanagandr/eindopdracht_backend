@@ -17,13 +17,4 @@ public class InvoiceDtoMapper {
 
         return dto;
     }
-
-    //from InvoiceDto to Invoice
-    public Invoice invoiceDtoToInvoice(InvoiceDto invoiceDto) {
-        Invoice invoice = new Invoice();
-        invoice.setCar(invoiceDto.car);
-        invoice.setTotalAmount(invoiceDto.totalAmount);
-        invoice.setInvoicePaid(invoiceDto.invoicePaid);
-        return invoice;
-    }
 }

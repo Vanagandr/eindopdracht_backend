@@ -18,10 +18,9 @@ public class CarDto {
     @NotBlank(message = "Veld mag niet leeg zijn")
     public String yearOfConstruct;
 
-    @NotBlank(message = "Veld mag niet leeg zijn")
+    //No validation for components because they do not always exist.
     public LocalDate inspectionDate;
 
-    @NotBlank(message = "Veld mag niet leeg zijn")
     public LocalDate repairDate;
 
     public CustomerOutputDto customer;

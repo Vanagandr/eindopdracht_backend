@@ -20,7 +20,7 @@ public class AuthService {
         this.authManager = authenticationManager;
         this.jwtService = jwtService;
     }
-
+    // Sign in method
     public String signIn(AuthDto authDto) {
         UsernamePasswordAuthenticationToken up = new UsernamePasswordAuthenticationToken(authDto.username, authDto.password);
 

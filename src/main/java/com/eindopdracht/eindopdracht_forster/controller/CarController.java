@@ -33,67 +33,67 @@ public class CarController {
         this.carDtoMapper = carDtoMapper;
         this.carPapersService = carPapersService;
     }
-
+    //Add a car
     @PostMapping()
     public ResponseEntity<CarDto> addCar(@RequestBody CarDto carDto) {
         CarDto car = carService.addCar(carDto);
         return ResponseEntity.ok(car);
     }
-
-    @PostMapping("/inspectiondate")
-    public ResponseEntity<CarDto> addInspectionDate(@RequestBody String carId, LocalDate inspectionDate){
-        CarDto carDto = carService.addInspectionDate(carId, inspectionDate);
+    //Add an inspection date
+    @PostMapping("/inspectiondate/{registration}/{inspectionDate}")
+    public ResponseEntity<Optional<CarDto>> addInspectionDate(@PathVariable String registration, @PathVariable LocalDate inspectionDate){
+        Optional<CarDto> carDto = carService.addInspectionDate(registration, inspectionDate);
         return ResponseEntity.ok(carDto);
     }
-
-    @PostMapping("/repairdate")
-    public ResponseEntity<CarDto> addRepairDate(@RequestBody String carId, LocalDate repairDate){
-        CarDto carDto = carService.addRepairDate(carId, repairDate);
+    //Add a repair date.
+    @PostMapping("/repairdate/{registration}/{repairDate}")
+    public ResponseEntity<Optional<CarDto>> addRepairDate(@PathVariable String registration,@PathVariable LocalDate repairDate){
+        Optional<CarDto> carDto = carService.addRepairDate(registration, repairDate);
         return ResponseEntity.ok(carDto);
     }
-
-    @DeleteMapping("{id}")
-    public ResponseEntity<String> removeCar(@PathVariable String id){
-        carService.removeCar(id);
+    //Delete car by registration
+    @DeleteMapping("{registration}")
+    public ResponseEntity<String> removeCar(@PathVariable String registration){
+        carService.removeCar(registration);
         return ResponseEntity.ok("Auto is verwijderd!");
     }
-
-    @GetMapping("{id}")
-    public ResponseEntity<Optional<CarDto>> getCar(@PathVariable String id){
-        Optional<CarDto> car = carService.getCar(id);
+    //Get a car by registration
+    @GetMapping("{registration}")
+    public ResponseEntity<Optional<CarDto>> getCar(@PathVariable String registration){
+        Optional<CarDto> car = carService.getCar(registration);
         return ResponseEntity.ok(car);
     }
-
+    //Assign a car to a customer
     @PostMapping("/assigncustomer/{customerId}/{carId}")
     public ResponseEntity<String> assignCarToCustomer(@PathVariable Long customerId, @PathVariable String carId){
         String response = carService.assignCarToCustomer(customerId, carId);
         return ResponseEntity.ok(response);
     }
-
+    //Add a needed repair to a car
     @PostMapping("/neededrepairs/{type}/{registration}")
     public ResponseEntity<CarDto> addNeededRepair(@PathVariable String registration, @PathVariable String type){
         CarDto carDto = carService.addNeededRepair(registration, type);
         return ResponseEntity.ok(carDto);
     }
-
+    // Add a done repair to a car
     @PostMapping("/donerepairs/{type}/{registration}")
     public ResponseEntity<CarDto> addDoneRepair(@PathVariable String registration, @PathVariable String type){
         CarDto carDto = carService.addDoneRepair(registration, type);
         return ResponseEntity.ok(carDto);
     }
-
+    // Add a used part to a car
     @PostMapping("/usedparts/{type}/{registration}")
     public ResponseEntity<CarDto> addUsedPart(@PathVariable String registration, @PathVariable String type){
         CarDto carDto = carService.addUsedPart(registration, type);
         return ResponseEntity.ok(carDto);
     }
-
-    @PostMapping("/{carId}/repair")
-    public ResponseEntity<String> updateRepairStatus(@PathVariable String carId, @RequestParam boolean agreeRepair) {
-        String response = carService.updateAgreeRepair(carId, agreeRepair);
+    // Update the repair agreement
+    @PostMapping("/{registration}/repair")
+    public ResponseEntity<String> updateRepairStatus(@PathVariable String registration, @RequestParam boolean agreeRepair) {
+        String response = carService.updateAgreeRepair(registration, agreeRepair);
         return ResponseEntity.ok(response);
     }
-
+    // Add papers to a car
     @PostMapping("/{registration}/papers")
     public ResponseEntity<Car> addPapers(@PathVariable String registration, @RequestBody MultipartFile file) throws IOException {
         String url = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -109,7 +109,7 @@ public class CarController {
         return ResponseEntity.created(URI.create(url)).body(car);
 
     }
-
+    // Get papers from a car
     @GetMapping("/{registration}/papers")
     public ResponseEntity<byte[]> getCarPapers(@PathVariable String registration) {
         CarPapers carPapers = carService.getCarPapers(registration);

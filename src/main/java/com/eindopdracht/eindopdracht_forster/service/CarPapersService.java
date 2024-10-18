@@ -17,6 +17,7 @@ public class CarPapersService {
         this.carPapersRepository = carPapersRepository;
     }
 
+    //Stores the car papers
     public CarPapers storeFile(MultipartFile file, String url) throws IOException {
         String fileName = file.getOriginalFilename();
         String contentType = file.getContentType();
@@ -25,10 +26,6 @@ public class CarPapersService {
         CarPapers carPapers = new CarPapers(fileName, contentType, url, bytes);
 
         return carPapersRepository.save(carPapers);
-    }
-
-    public CarPapers getCarPapersbyId(Long id){
-        return carPapersRepository.findById(id).orElseThrow(()-> new CarPaperException("Car Papers not found"));
     }
 
 }

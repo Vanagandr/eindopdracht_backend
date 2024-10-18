@@ -2,11 +2,8 @@ package com.eindopdracht.eindopdracht_forster.mapper;
 
 import com.eindopdracht.eindopdracht_forster.model.Car;
 import com.eindopdracht.eindopdracht_forster.dto.CarDto;
-import com.eindopdracht.eindopdracht_forster.model.Customer;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class CarDtoMapper {
